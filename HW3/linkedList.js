@@ -1,16 +1,20 @@
-class node {
+class Node {
   constructor(data) {
     this.data = data;
     this.next = null;
   }
 }
 
-class linkedList {
+class LinkedList {
   constructor(data) {
     this.head = null;
     this.tail = null;
+    if (data !== undefined) {
+      this.append(data);
+    }
   }
-  append() {
+
+  append(data) {
     if (!data) return "No hay dato";
     const newNode = new Node(data);
     if (!this.head) {
@@ -22,7 +26,7 @@ class linkedList {
     }
   }
 
-  prepend() {
+  prepend(data) {
     if (!data) return "No hay dato";
     const newNode = new Node(data);
     if (!this.head) {
@@ -33,8 +37,32 @@ class linkedList {
       this.head = newNode;
     }
   }
-  insertAfterNode() {}
-  traverse() {}
+
+  insertAfterNode(node, value) {
+    if (!node || !value) return "No existe el nodo o el valor proporcionado";
+    let current = this.head;
+    const newNode = new Node(value);
+    while (current) {
+      if (current === node) {
+        newNode.next = current.next;
+        current.next = newNode;
+        if (current === this.tail) {
+          this.tail = newNode;
+        }
+        return "Nodo  insertado correctamente";
+      }
+      current = current.next;
+    }
+    return "Nodo  no encontrado en la lista";
+  }
+
+  traverse() {
+    let current = this.head;
+    while (current) {
+      console.log(current.data);
+      current = current.next;
+    }
+  }
 
   deleteNode(element) {
     if (!element || !this.head) {
@@ -64,7 +92,7 @@ class linkedList {
 
   deleteHead() {
     if (!this.head) {
-      return "No hay";
+      return "Error!! No hay elementos en la lista.";
     }
     this.head = this.head.next;
 
@@ -83,25 +111,14 @@ class linkedList {
     while (current.next) {
       if (current.next === this.tail) {
         this.tail = current;
-        return "La cola ha sido reasignada";
+        return "La cola se reasigno";
       }
       current = current.next;
     }
   }
-
-  insertAfterNode(node, value) {
-    let current = this.head;
-    const newNode = new Node(value);
-    while (current) {
-      if (current.data === value) {
-        newNode.next = current.next;
-        current.next = newNode;
-        if (current = this.tail){
-            this.tail = newNode
-        }
-        return
-      }
-      current = current.next
-    }
-  }
 }
+
+// const list = new LinkedList(10);
+// list.append(20);
+// list.prepend(5);
+// list.traverse();
